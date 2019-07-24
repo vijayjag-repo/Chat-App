@@ -22,10 +22,16 @@ io.on('connection',function(socket){
     //socket.emit() will emit only to the current connection.
     //io.emit() will emit to all connections.
   socket.emit('message',"Hello");
+  //socket.broadcast.emit() sends to everyone except the one sending.
+  socket.broadcast.emit('message',"A new user has joined");
   socket.on('sendmessage',function(message){
     io.emit('message',message);
   });
 
+  //client disconnects so inform other clients.
+  socket.on('disconnect',function(){
+    io.emit('message',"One user has left");
+  });
 
 });
 //just change app.listen() to server.listen().

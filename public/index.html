@@ -6,7 +6,10 @@
   </head>
   <body>
     Chat App
-    <button id="inc"type="button" name="button">+1</button>
+    <form id="message-form">
+      <input name="tell" placeholder="Enter text">
+      <button type="submit">Send</button>
+    </form>
     <!--This is served because we have configured our server to work with socket.io -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/chat.js"></script>
