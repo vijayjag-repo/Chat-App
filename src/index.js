@@ -19,14 +19,14 @@ var count = 0;
 //socket is an object and contains information about the connection.
 io.on('connection',function(socket){
   console.log("New connection");
-  //this count is accessible to the client as a callback.
-  socket.emit('countupdated',count);
-  socket.on('increment',function(){
-    count = count + 1;
     //socket.emit() will emit only to the current connection.
     //io.emit() will emit to all connections.
-    io.emit('countupdated',count);
+  socket.emit('message',"Hello");
+  socket.on('sendmessage',function(message){
+    io.emit('message',message);
   });
+
+
 });
 //just change app.listen() to server.listen().
 server.listen(port,function(){
