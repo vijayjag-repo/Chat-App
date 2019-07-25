@@ -35,7 +35,7 @@ io.on('connection',function(socket){
 
   //listen for lat long
   socket.on('sendlocation',function(coords,callback){
-    io.emit('message',`https://google.com/maps?q=${coords.lat},${coords.lng}`);
+    io.emit('locationMessage',`https://google.com/maps?q=${coords.lat},${coords.lng}`);
     callback();
   });
 
