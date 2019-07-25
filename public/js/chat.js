@@ -14,3 +14,20 @@ document.querySelector('#message-form').addEventListener('submit',function(e){
   const message = e.target.elements.tell.value;
   socket.emit('sendmessage',message);
 });
+
+//using geolocation api using browser
+document.querySelector('#send-location').addEventListener('click',function(){
+  //position object contains the location that we want to share.
+
+  // function success(pos){
+  //
+  // }
+  navigator.geolocation.getCurrentPosition(function success(pos){
+    socket.emit('sendlocation',{
+      lat: pos.coords.latitude,
+      lng: pos.coords.longitude
+    });
+  });
+
+
+});

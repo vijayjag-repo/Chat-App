@@ -28,6 +28,11 @@ io.on('connection',function(socket){
     io.emit('message',message);
   });
 
+  //listen for lat long
+  socket.on('sendlocation',function(coords){
+    io.emit('message',`https://google.com/maps?q=${coords.lat},${coords.lng}`);
+  });
+
   //client disconnects so inform other clients.
   socket.on('disconnect',function(){
     io.emit('message',"One user has left");
