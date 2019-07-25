@@ -2,7 +2,7 @@ const path = require('path');
 const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
-
+const Filter = require('bad-words');
 const app = express();
 //This is something that node does on the background if we normally use express.
 const server = http.createServer(app);
@@ -15,7 +15,6 @@ const publicId = path.join(__dirname,'../public');
 
 app.use(express.static(publicId));
 
-var count = 0;
 //socket is an object and contains information about the connection.
 io.on('connection',function(socket){
   console.log("New connection");
@@ -24,13 +23,20 @@ io.on('connection',function(socket){
   socket.emit('message',"Hello");
   //socket.broadcast.emit() sends to everyone except the one sending.
   socket.broadcast.emit('message',"A new user has joined");
-  socket.on('sendmessage',function(message){
+  //The callback function is to acknowlegde that the server has received the message.
+  socket.on('sendmessage',function(message,callback){
+    const filter = new Filter();
+    if(filter.isProfane(message)){
+      return(callback("Profanity is not allowed"));
+    }
     io.emit('message',message);
+    callback();
   });
 
   //listen for lat long
-  socket.on('sendlocation',function(coords){
+  socket.on('sendlocation',function(coords,callback){
     io.emit('message',`https://google.com/maps?q=${coords.lat},${coords.lng}`);
+    callback();
   });
 
   //client disconnects so inform other clients.
