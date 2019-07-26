@@ -3,34 +3,52 @@
 
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>Chat App</title>
+  <link rel="icon" href="/img/favicon.png">
+  <link rel="stylesheet" href="/css/styles.min.css">
 </head>
 
 <body>
-  Chat App
-  <div id="messages">
+  <div class="chat">
+    <div class="chat__sidebar">
 
+    </div>
+    <div class="chat__main">
+      <div id="messages" class="chat__messages"></div>
+      <div id="compose">
+        <form id="message-form">
+            <input name="tell" placeholder="Enter text">
+            <button type="submit">Send</button>
+          </form>
+          <button id="send-location">Send Location</button>
+      </div>
+    </div>
   </div>
-  <form id="message-form">
-    <input name="tell" placeholder="Enter text">
-    <button type="submit">Send</button>
-  </form>
-  <button id="send-location">Send Location</button>
+  
+  
 
   <script id="message-template" type="text/html">
-    <div>
+    <div class="message">
+      <p>
+        <span class="message__name">UserName</span>
+        <span class="message__meta">{{createdAt}}</span>
+      </p>
       <p>
         <!-- mustache library will replace this with the actual dynamic message -->
-        {{createdAt}} - {{message}}
+        {{message}}
       </p>
     </div>
   </script>
 
   <script id="location-message-template" type="text/html">
-    <div>
+    <div class="message">
+      <p>
+        <span class="message__name">UserName</span>
+        <span class="message__meta">{{createdAt}}</span>
+      </p>
       <p>
         <!-- target=_blank. You wont leave the chatroom if you click the link -->
-        {{createdAt}} - <a href="{{url}}" target="_blank">My Current Location</a>
+       <a href="{{url}}" target="_blank">My Current Location</a>
       </p>
     </div>
   </script>
