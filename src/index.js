@@ -19,11 +19,19 @@ app.use(express.static(publicId));
 //socket is an object and contains information about the connection.
 io.on('connection',function(socket){
   console.log("New connection");
+    
+
+  socket.on('join',function({username,room}){
+    //allows us to join the room.
+    socket.join(room);
     //socket.emit() will emit only to the current connection.
     //io.emit() will emit to all connections.
-  socket.emit('message',generateMessage('Welcome!'));
-  //socket.broadcast.emit() sends to everyone except the one sending.
-  socket.broadcast.emit('message',generateMessage("A new user has joined"));
+    socket.emit('message',generateMessage('Welcome!'));
+    //socket.broadcast.emit() sends to everyone except the one sending.
+    //socket.broadcast.to().emit() will send to everyone except the sender but only in that room.
+    socket.broadcast.to(room).emit('message',generateMessage(`${username} has joined`));
+  });
+
   //The callback function is to acknowlegde that the server has received the message.
   socket.on('sendmessage',function(message,callback){
     const filter = new Filter();
