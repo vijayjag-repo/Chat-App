@@ -3,6 +3,7 @@ const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
 const Filter = require('bad-words');
+const {generateMessage} = require('./messages.js');
 const app = express();
 //This is something that node does on the background if we normally use express.
 const server = http.createServer(app);
@@ -20,16 +21,16 @@ io.on('connection',function(socket){
   console.log("New connection");
     //socket.emit() will emit only to the current connection.
     //io.emit() will emit to all connections.
-  socket.emit('message',"Hello");
+  socket.emit('message',generateMessage('Welcome!'));
   //socket.broadcast.emit() sends to everyone except the one sending.
-  socket.broadcast.emit('message',"A new user has joined");
+  socket.broadcast.emit('message',generateMessage("A new user has joined"));
   //The callback function is to acknowlegde that the server has received the message.
   socket.on('sendmessage',function(message,callback){
     const filter = new Filter();
     if(filter.isProfane(message)){
       return(callback("Profanity is not allowed"));
     }
-    io.emit('message',message);
+    io.emit('message',generateMessage(message));
     callback();
   });
 
@@ -41,7 +42,7 @@ io.on('connection',function(socket){
 
   //client disconnects so inform other clients.
   socket.on('disconnect',function(){
-    io.emit('message',"One user has left");
+    io.emit('message',generateMessage("One user has left"));
   });
 
 });

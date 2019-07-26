@@ -18,7 +18,9 @@ socket.on('message',function(msg){
   console.log(msg);
   //mustache is passing the actual message to render on the browser.
   const html = Mustache.render(messageTemplate,{
-    message: msg
+    message: msg.text,
+    //moment library will format this timestamp for us.
+    createdAt: moment(msg.createdAt).format('h:mm A')
   });
   //append messages to the bottom
   $messages.insertAdjacentHTML('beforeend',html);
