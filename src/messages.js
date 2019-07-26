@@ -5,6 +5,13 @@ const generateMessage = function(text){
     });
 };
 
+const generateLocationMessage = function(msg){
+    return({
+        url: msg,
+        createdAt: new Date().getTime()
+    });
+};
+
 module.exports = {
-    generateMessage
+    generateMessage,generateLocationMessage
 }

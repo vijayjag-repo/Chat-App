@@ -3,7 +3,7 @@ const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
 const Filter = require('bad-words');
-const {generateMessage} = require('./messages.js');
+const {generateMessage,generateLocationMessage} = require('./messages.js');
 const app = express();
 //This is something that node does on the background if we normally use express.
 const server = http.createServer(app);
@@ -36,7 +36,7 @@ io.on('connection',function(socket){
 
   //server gets the lat long from client
   socket.on('sendlocation',function(coords,callback){
-    io.emit('locationMessage',`https://google.com/maps?q=${coords.lat},${coords.lng}`);
+    io.emit('locationMessage',generateLocationMessage(`https://google.com/maps?q=${coords.lat},${coords.lng}`));
     callback();
   });
 

@@ -30,7 +30,8 @@ socket.on('locationMessage',function(url){
   console.log(url);
 
   const html = Mustache.render(locationMessageTemplate,{
-    url: url
+    url: url.url,
+    createdAt: moment(url.createdAt).format('h:mm A')
   });
   //append messages to the bottom
   $messages.insertAdjacentHTML('beforeend',html);
