@@ -9,56 +9,18 @@
 </head>
 
 <body>
-  <div class="chat">
-    <div class="chat__sidebar">
-
-    </div>
-    <div class="chat__main">
-      <div id="messages" class="chat__messages"></div>
-      <div id="compose">
-        <form id="message-form">
-            <input name="tell" placeholder="Enter text">
-            <button type="submit">Send</button>
-          </form>
-          <button id="send-location">Send Location</button>
-      </div>
+  <div class="centered-form">
+    <div class="centered-form__box">
+      <h1>Join</h1>
+      <form action="/chat.html">
+        <label for="">Display Name</label>
+        <input type="text" name="username" placeholder="Display Name" required>  
+        <label for="">Room</label>
+        <input type="text" name="Room" placeholder="Room" required>
+        <button>Join</button>
+      </form>
     </div>
   </div>
-  
-  
-
-  <script id="message-template" type="text/html">
-    <div class="message">
-      <p>
-        <span class="message__name">UserName</span>
-        <span class="message__meta">{{createdAt}}</span>
-      </p>
-      <p>
-        <!-- mustache library will replace this with the actual dynamic message -->
-        {{message}}
-      </p>
-    </div>
-  </script>
-
-  <script id="location-message-template" type="text/html">
-    <div class="message">
-      <p>
-        <span class="message__name">UserName</span>
-        <span class="message__meta">{{createdAt}}</span>
-      </p>
-      <p>
-        <!-- target=_blank. You wont leave the chatroom if you click the link -->
-       <a href="{{url}}" target="_blank">My Current Location</a>
-      </p>
-    </div>
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
-  <!--This is served because we have configured our server to work with socket.io -->
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/js/chat.js"></script>
 </body>
 
 </html>
