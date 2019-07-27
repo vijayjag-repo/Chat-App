@@ -39,14 +39,17 @@ const removeUser = function(id){
     }
 };
 
-addUser({
-    id: 22,
-    username: 'vijay',
-    room: '21'
-});
+const getUser = function(id){
+    return(users.find(function(user){
+        return(user.id===id);
+    }));
+}
 
-console.log(users);
+const getUsersinRoom = function(room){
+    room = room.trim().toLowerCase();
+    return(users.filter(function(user){
+        return(user.room==room);
+    }));
+}
 
-const removedUser = removeUser(22);
-console.log(users);
-console.log(removedUser);
+module.exports = {addUser,removeUser,getUser,getUsersinRoom};
