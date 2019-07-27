@@ -35,6 +35,10 @@ io.on('connection',function(socket){
     //socket.broadcast.emit() sends to everyone except the one sending.
     //socket.broadcast.to().emit() will send to everyone except the sender but only in that room.
     socket.broadcast.to(user.room).emit('message',generateMessage('Admin',`${user.username} has joined`));
+    io.to(user.room).emit('roomData',{
+      room: user.room,
+      users: getUsersinRoom(user.room)
+    });
   });
 
   //The callback function is to acknowlegde that the server has received the message.
@@ -60,8 +64,11 @@ io.on('connection',function(socket){
     const person = removeUser(socket.id);
     if(person){
       io.to(person.room).emit('message',generateMessage('Admin',`${person.username} has left`));
+      io.to(person.room).emit('roomData',{
+        room: person.room,
+        users: getUsersinRoom(person.room)
+      });
     }
-    
   });
 
 });

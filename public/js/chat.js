@@ -13,6 +13,7 @@ const $messages = document.querySelector('#messages');
 //Render something to browser when something comes in.
 const messageTemplate = document.querySelector('#message-template').innerHTML;
 const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML;
+const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML;
 
 //query string processing
 const {username,room} = Qs.parse(location.search,{ignoreQueryPrefix: true});
@@ -42,13 +43,20 @@ socket.on('locationMessage',function(url){
   $messages.insertAdjacentHTML('beforeend',html);
 });
 
+socket.on('roomData',function({room,users}){
+  const html = Mustache.render(sidebarTemplate,{
+    room,users
+  });
+  document.querySelector('#sidebar').innerHTML = html;
+});
+
 $messageForm.addEventListener('submit',function(e){
   e.preventDefault();
   //e.target gets you to the form and elements gets you to the elements.
 
   //disable form
   $messageFormButton.setAttribute('disabled','disabled');
-  const message = e.target.elements.tell.value;
+  const message = e.target.elements.message.value;
   //callback function to know whether the message was delivered.
   //whoever is emitting an event sets up a callback function.
   socket.emit('sendmessage',message,function(error){
