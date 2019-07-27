@@ -2,9 +2,9 @@ const users = [];
 
 //addUser, removeUser, getUser, getUsersinRoom
 const addUser = function({id,username,room}){
-    //clean the data
-    username = username.trim().toLowerCase();
-    room = room.trim().toLowerCase();
+    // clean the data
+    username = username.toLowerCase();
+    room = room.toLowerCase();
 
     //validate
     if(!username || !room){
@@ -46,10 +46,11 @@ const getUser = function(id){
 }
 
 const getUsersinRoom = function(room){
-    room = room.trim().toLowerCase();
+    room = room.toLowerCase();
     return(users.filter(function(user){
         return(user.room==room);
     }));
 }
 
 module.exports = {addUser,removeUser,getUser,getUsersinRoom};
+

@@ -21,6 +21,7 @@ socket.on('message',function(msg){
   console.log(msg);
   //mustache is passing the actual message to render on the browser.
   const html = Mustache.render(messageTemplate,{
+    username: msg.username,
     message: msg.text,
     //moment library will format this timestamp for us.
     createdAt: moment(msg.createdAt).format('h:mm A')
@@ -33,6 +34,7 @@ socket.on('locationMessage',function(url){
   console.log(url);
 
   const html = Mustache.render(locationMessageTemplate,{
+    username: url.username,
     url: url.url,
     createdAt: moment(url.createdAt).format('h:mm A')
   });
@@ -79,4 +81,9 @@ $sendLocationButton.addEventListener('click',function(){
 
 });
 
-socket.emit('join',{username,room});
+socket.emit('join',{username,room},function(error){
+  if(error){
+    alert(error);
+    location.href = '/';
+  }
+});

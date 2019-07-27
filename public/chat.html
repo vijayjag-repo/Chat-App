@@ -17,7 +17,7 @@
       <div id="messages" class="chat__messages"></div>
       <div id="compose">
         <form id="message-form">
-            <input name="tell" placeholder="Enter text">
+            <input name="message" placeholder="Enter text" required autocomplete="off">
             <button type="submit">Send</button>
           </form>
           <button id="send-location">Send Location</button>
@@ -30,7 +30,7 @@
   <script id="message-template" type="text/html">
     <div class="message">
       <p>
-        <span class="message__name">UserName</span>
+        <span class="message__name">{{username}}</span>
         <span class="message__meta">{{createdAt}}</span>
       </p>
       <p>
@@ -43,7 +43,7 @@
   <script id="location-message-template" type="text/html">
     <div class="message">
       <p>
-        <span class="message__name">UserName</span>
+        <span class="message__name">{{username}}</span>
         <span class="message__meta">{{createdAt}}</span>
       </p>
       <p>
