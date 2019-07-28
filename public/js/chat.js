@@ -18,6 +18,29 @@ const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML;
 //query string processing
 const {username,room} = Qs.parse(location.search,{ignoreQueryPrefix: true});
 
+const autoscroll = function(){
+  //New message
+  const $newMessage = $messages.lastElementChild
+
+  // Height of the new message
+  const newMessageStyles = getComputedStyle($newMessage); 
+  const newMessageMargin = parseInt(newMessageStyles.marginBottom);
+  const newMessageHeight = $newMessage.offsetHeight + newMessageMargin;
+
+  //visible height
+  const visibleHeight = $messages.offsetHeight;
+
+  //height of msgs container
+  const containerHeight = $messages.scrollHeight;
+
+  //how far have I scrolled - if the scroll is at the top, then this value is 0
+  const scrollOffset = $messages.scrollTop + visibleHeight;
+
+  if(containerHeight-newMessageHeight<=scrollOffset){
+    $messages.scrollTop = $messages.scrollHeight;
+  }
+};
+
 socket.on('message',function(msg){
   console.log(msg);
   //mustache is passing the actual message to render on the browser.
@@ -29,6 +52,7 @@ socket.on('message',function(msg){
   });
   //append messages to the bottom
   $messages.insertAdjacentHTML('beforeend',html);
+  autoscroll();
 });
 
 socket.on('locationMessage',function(url){
